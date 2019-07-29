@@ -5,6 +5,10 @@
     path: "{{ ansistrano_release_path.stdout }}"
 
 - name: ANSISTRANO | SCP | Deploy existing code to remote servers
+  retries: 5
+  delay: 3
+  register: result
+  until: result.rc == 0
   copy:
     src: "{{ ansistrano_deploy_from }}"
     dest: "{{ ansistrano_release_path.stdout }}"
